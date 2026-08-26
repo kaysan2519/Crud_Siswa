@@ -11,13 +11,14 @@ export default function TambahSiswa() {
   const [nis, setNis] = useState("");
   const [nama, setNama] = useState("");
   const [kelas, setKelas] = useState("");
+  const [alamat, setAlamat] = useState("");
 
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    if (!nis || !nama || !kelas) {
+   if (!nis || !nama || !kelas || !alamat) {
       alert("Semua data harus diisi");
       return;
     }
@@ -26,12 +27,12 @@ export default function TambahSiswa() {
 
     const supabase = createClient();
 
-    const { error } = await supabase.from("students").insert({
-      nis,
-      nama,
-      kelas,
-    });
-
+ const { error } = await supabase.from("students").insert({
+  nis,
+  nama,
+  kelas,
+  alamat,
+});
     if (error) {
       console.error(error);
       alert("Gagal menambahkan data");
@@ -93,6 +94,16 @@ export default function TambahSiswa() {
                 placeholder="Contoh: XI RPL 1"
               />
             </div>
+            <div>
+  <label className="mb-2 block font-medium">Alamat</label>
+  <input
+    type="text"
+    value={alamat}
+    onChange={(e) => setAlamat(e.target.value)}
+    className="w-full rounded-lg border p-3 outline-none focus:ring-2 focus:ring-blue-500"
+    placeholder="Masukkan alamat siswa"
+  />
+</div>
 
             <button
               type="submit"
